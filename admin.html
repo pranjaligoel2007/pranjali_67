@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - NGO</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="admin.css">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="admin-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">
+          <i class="fas fa-hands-helping"></i>
+          <h1>NGO Admin</h1>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <div class="nav-section">
+          <div class="nav-section-title">Main</div>
+          <a class="nav-link active" data-section="dashboard">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboard</span>
+          </a>
+        </div>
+        
+        <div class="nav-section">
+          <div class="nav-section-title">Management</div>
+          <a class="nav-link" data-section="volunteers">
+            <i class="fas fa-users"></i>
+            <span>Volunteers</span>
+            <span class="badge">24</span>
+          </a>
+          <a class="nav-link" data-section="donations">
+            <i class="fas fa-hand-holding-heart"></i>
+            <span>Donations</span>
+          </a>
+          <a class="nav-link" data-section="events">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Events</span>
+            <span class="badge">3</span>
+          </a>
+        </div>
+        
+        <div class="nav-section">
+          <div class="nav-section-title">Other</div>
+          <a class="nav-link" data-section="settings">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Topbar -->
+      <div class="topbar">
+        <div class="topbar-left">
+          <h2 id="page-title">Dashboard</h2>
+        </div>
+        <div class="topbar-right">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search...">
+          </div>
+          <div class="user-menu">
+            <div class="user-avatar">AD</div>
+            <span>Admin</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Content Area -->
+      <div class="content-area">
+        <!-- Dashboard Section -->
+        <section class="section active" id="dashboard">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div>
+                  <div class="stat-value">1,247</div>
+                  <div class="stat-label">Total Volunteers</div>
+                </div>
+                <div class="stat-icon primary">
+                  <i class="fas fa-users"></i>
+                </div>
+              </div>
+              <div class="stat-trend up">
+                <i class="fas fa-arrow-up"></i>
+                <span>12% from last month</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div>
+                  <div class="stat-value">$58,423</div>
+                  <div class="stat-label">Total Donations</div>
+                </div>
+                <div class="stat-icon success">
+                  <i class="fas fa-dollar-sign"></i>
+                </div>
+              </div>
+              <div class="stat-trend up">
+                <i class="fas fa-arrow-up"></i>
+                <span>8% from last month</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div>
+                  <div class="stat-value">42</div>
+                  <div class="stat-label">Active Events</div>
+                </div>
+                <div class="stat-icon warning">
+                  <i class="fas fa-calendar"></i>
+                </div>
+              </div>
+              <div class="stat-trend up">
+                <i class="fas fa-arrow-up"></i>
+                <span>3 new this week</span>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div>
+                  <div class="stat-value">8,542</div>
+                  <div class="stat-label">Lives Impacted</div>
+                </div>
+                <div class="stat-icon accent">
+                  <i class="fas fa-heart"></i>
+                </div>
+              </div>
+              <div class="stat-trend up">
+                <i class="fas fa-arrow-up"></i>
+                <span>25% from last quarter</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Impact Overview</h3>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas id="impactChart"></canvas>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Recent Activities</h3>
+            </div>
+            <div class="card-body">
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Activity</th>
+                      <th>User</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recent-activities">
+                    <!-- Will be populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Volunteers Section -->
+        <section class="section" id="volunteers">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Volunteer Management</h3>
+              <button class="btn btn-primary" id="add-volunteer-btn">
+                <i class="fas fa-plus"></i>
+                Add Volunteer
+              </button>
+            </div>
+            <div class="card-body">
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Status</th>
+                      <th>Joined</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="volunteers-table">
+                    <!-- Will be populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Donations Section -->
+        <section class="section" id="donations">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div>
+                  <div class="stat-value">$58,423</div>
+                  <div class="stat-label">Total This Month</div>
+                </div>
+                <div class="stat-icon success">
+                  <i class="fas fa-dollar-sign"></i>
+                </div>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div>
+                  <div class="stat-value">342</div>
+                  <div class="stat-label">Total Donors</div>
+                </div>
+                <div class="stat-icon primary">
+                  <i class="fas fa-users"></i>
+                </div>
+              </div>
+            </div>
+            
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <div>
+                  <div class="stat-value">$171</div>
+                  <div class="stat-label">Average Donation</div>
+                </div>
+                <div class="stat-icon accent">
+                  <i class="fas fa-chart-bar"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Recent Donations</h3>
+            </div>
+            <div class="card-body">
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Donor</th>
+                      <th>Amount</th>
+                      <th>Purpose</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="donations-table">
+                    <!-- Will be populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Events Section -->
+        <section class="section" id="events">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Event Management</h3>
+              <button class="btn btn-primary" id="add-event-btn">
+                <i class="fas fa-plus"></i>
+                Create Event
+              </button>
+            </div>
+            <div class="card-body">
+              <div class="table-container">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Event Name</th>
+                      <th>Date</th>
+                      <th>Location</th>
+                      <th>Volunteers</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="events-table">
+                    <!-- Will be populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Settings Section -->
+        <section class="section" id="settings">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">General Settings</h3>
+            </div>
+            <div class="card-body">
+              <p class="text-muted">Settings functionality coming soon...</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  
+  <script src="admin.js"></script>
+</body>
+</html>

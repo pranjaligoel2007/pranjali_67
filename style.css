@@ -1,0 +1,55 @@
+.leaflet-country-popup .leaflet-popup-content-wrapper {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.leaflet-country-popup .leaflet-popup-tip {
+  background: #000000;
+}
+
+.country-popup {
+  background: #000000;
+  color: #ffffff;
+  border-radius: 16px;
+  max-width: 360px;
+  padding: 20px 22px 18px;
+  font-family: Arial, sans-serif;
+}
+
+.popup-content h2 {
+  margin: 0 0 12px;
+  font-size: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.popup-content p {
+  margin: 0 0 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #e8e8e8;
+}
+
+.popup-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  color: #000000;
+  padding: 10px 16px;
+  border-radius: 22px;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.popup-cta .arrow {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
